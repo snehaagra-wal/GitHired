@@ -15,20 +15,6 @@
 
 ---
 
-### 🖥️ Platform Preview
-
-![GitHired Executive Dashboard](./preview.png)
-
-*Live Developer Dossier analysis showing Empirical Telemetry, AST Complexity Breakdown, Verified Skill Proofs, and Autonomous AI Hiring Assistant.*
-
-<br />
-
-![GitHired Clean Landing Page](./preview-hero.png)
-
-*Initial landing screen featuring Falling Word typography ("Smart Code. Smart Hire!"), continuous drifting background grid, and moving glowing border laser beams.*
-
----
-
 </div>
 
 ## 📌 About GitHired
