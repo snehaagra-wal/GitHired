@@ -143,19 +143,6 @@ npm run build
 npm run preview
 ```
 
----
-
-## 🧪 Sample Candidates to Benchmark
-
-Try searching for these notable open-source engineers to explore pre-configured dossiers:
-
-- `shadcn` — Creator of shadcn/ui (Design systems & component architecture)
-- `gaearon` — Dan Abramov (Redux, React Core contributor)
-- `leerob` — VP of Developer Experience (Next.js & React ecosystem)
-- `torvalds` — Linus Torvalds (Linux Kernel & Git)
-
----
-
 ## 📄 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
