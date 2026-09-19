@@ -40,8 +40,7 @@ Traditional technical hiring is fundamentally flawed. Resumes are filled with bu
 | **Hiring Committees** | Generate 1-Click Executive PDF Talent Dossiers and copy-ready summaries to share directly with VPs and stakeholders on Slack/Email. |
 | **Talent Scouts** | Benchmark two engineers head-to-head using the Developer Comparison Engine to choose the best candidate for a specific engineering role. |
 
----
-Direct Link-https://git-hired-eight.vercel.app/
+--
 
 ## ✨ Core Feature Suite
 
