@@ -36,6 +36,7 @@ Traditional technical hiring is fundamentally flawed. Resumes are filled with bu
 | **Talent Scouts** | Benchmark two engineers head-to-head using the Developer Comparison Engine to choose the best candidate for a specific engineering role. |
 
 ---
+Direct Link-https://git-hired-eight.vercel.app/
 
 ## ✨ Core Feature Suite
 
