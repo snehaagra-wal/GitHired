@@ -21,7 +21,7 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({
       name: 'Architectural Depth',
       score: complexity.architectureDepth,
       icon: Layers,
-      color: 'from-indigo-600 via-indigo-500 to-cyan-400',
+      color: 'from-indigo-500 to-cyan-400',
       description: 'Multi-tiered abstractions, modular packaging & domain boundaries'
     },
     {
@@ -35,11 +35,11 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({
       name: 'Maintainability Index',
       score: complexity.maintainability,
       icon: CheckCircle2,
-      color: 'from-purple-600 to-indigo-400',
+      color: 'from-purple-500 to-indigo-400',
       description: 'Issue resolution velocity, semantic releases & API stability'
     },
     {
-      name: 'Ecosystem & Open Source Impact',
+      name: 'Ecosystem & Impact',
       score: complexity.ecosystemImpact,
       icon: Star,
       color: 'from-sky-500 to-indigo-400',
@@ -48,82 +48,80 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({
   ];
 
   return (
-    <div className="glass-card rounded-2xl p-5 sm:p-6 border border-slate-200/90 dark:border-white/10 shadow-xl relative overflow-hidden transition-colors">
-      <div className="flex items-center justify-between gap-4 mb-6">
+    <div className="glass-card rounded-2xl p-4 sm:p-6 border border-white/[0.08] relative overflow-hidden">
+      <div className="flex items-center justify-between gap-3 mb-5 sm:mb-6">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-300">
-            <Cpu className="w-5 h-5" />
+          <div className="p-2 rounded-xl bg-indigo-500/15 border border-indigo-500/25 text-indigo-300">
+            <Cpu className="w-5 h-5 text-cyan-400" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-950 dark:text-white tracking-tight flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
               Code Complexity & Architecture
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            <p className="text-xs text-slate-400 font-mono">
               Algorithmic synthesis across {repoCount} repositories
             </p>
           </div>
         </div>
 
         {/* Grade Badge */}
-        <div className="flex items-center gap-2">
-          <div className="px-3.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-500/40 text-indigo-700 dark:text-indigo-200 font-mono font-black text-base shadow-sm">
-            Grade {complexity.grade}
-          </div>
+        <div className="px-3 py-1 rounded-xl bg-indigo-950/80 border border-indigo-500/30 text-cyan-300 font-mono font-bold text-sm shadow-sm flex-shrink-0">
+          Grade {complexity.grade}
         </div>
       </div>
 
       {/* Main Score Hero Bar */}
-      <div className="p-4 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-3.5 sm:p-4 rounded-xl bg-black/30 border border-white/[0.05] mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+          <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
             Overall Code Complexity Score
           </span>
           <div className="flex items-baseline gap-2 mt-0.5">
-            <span className="text-3xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight font-mono glow-text-indigo">
+            <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono glow-text-indigo">
               {complexity.overallScore}
             </span>
-            <span className="text-slate-400 text-sm font-mono">/ 100</span>
-            <span className="ml-2 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/25">
+            <span className="text-slate-400 text-xs sm:text-sm font-mono">/ 100</span>
+            <span className="ml-1 sm:ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/20">
               {complexity.overallScore >= 90 ? 'Top 1% Percentile' : 'Top 5% Percentile'}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 text-xs font-mono text-slate-500 dark:text-slate-400 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-white/10 pt-3 sm:pt-0 sm:pl-6">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs font-mono text-slate-400 border-t sm:border-t-0 sm:border-l border-white/[0.08] pt-2.5 sm:pt-0 sm:pl-5">
           <div className="flex items-center gap-1.5">
-            <Star className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+            <Star className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
             <span>{totalStars.toLocaleString()} Stars</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <GitFork className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <GitFork className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
             <span>{totalForks.toLocaleString()} Forks</span>
           </div>
         </div>
       </div>
 
       {/* Progress Bars for Factors */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
         {factors.map((factor, idx) => {
           const Icon = factor.icon;
           return (
             <div
               key={idx}
-              className="p-3.5 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-200/80 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/10 transition-colors"
+              className="p-3 sm:p-3.5 rounded-xl bg-black/20 border border-white/[0.05] hover:border-white/[0.1] transition-colors"
             >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Icon className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
-                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+              <div className="flex items-center justify-between mb-1.5">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <Icon className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                  <span className="text-xs font-semibold text-slate-200 truncate">
                     {factor.name}
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-300">
+                <span className="text-xs font-mono font-bold text-indigo-300">
                   {factor.score}%
                 </span>
               </div>
 
               {/* Progress track */}
-              <div className="w-full h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-hidden mb-2">
+              <div className="w-full h-1.5 bg-slate-800/80 rounded-full overflow-hidden mb-1.5">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${factor.score}%` }}
@@ -132,7 +130,7 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({
                 />
               </div>
 
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+              <p className="text-[11px] text-slate-400 leading-tight">
                 {factor.description}
               </p>
             </div>
@@ -141,9 +139,11 @@ export const ComplexityCard: React.FC<ComplexityCardProps> = ({
       </div>
 
       {/* Summary note */}
-      <p className="mt-5 text-xs text-slate-600 dark:text-slate-300 italic bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/20 p-3.5 rounded-xl leading-relaxed">
-        💡 <strong className="text-slate-900 dark:text-slate-200 not-italic">Intelligence Synthesis:</strong> {complexity.summary}
+      <p className="mt-4 sm:mt-5 text-xs text-slate-300 bg-indigo-950/30 border border-indigo-500/20 p-3 sm:p-3.5 rounded-xl leading-relaxed">
+        💡 <strong className="text-white not-italic">Intelligence Synthesis:</strong> {complexity.summary}
       </p>
     </div>
   );
 };
+
+export default ComplexityCard;

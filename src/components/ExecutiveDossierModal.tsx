@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Download, Copy, Check, ShieldCheck, Sparkles, 
-  Cpu, GitPullRequest, Star, Calendar, ExternalLink,
-  Award, FileText, CheckCircle2, ChevronRight
+  Cpu, Star, Calendar, FileText
 } from 'lucide-react';
 import { CandidateDossier } from '../types';
 import { exportCandidatePdf } from '../utils/pdfExport';
@@ -25,7 +24,7 @@ export const ExecutiveDossierModal: React.FC<ExecutiveDossierModalProps> = ({
 
   if (!isOpen) return null;
 
-  const { profile, complexity, techStack, verifiedSkills, repos } = dossier;
+  const { profile, complexity, techStack, repos } = dossier;
   const badges = evaluateSkillBadges(dossier);
   const unlockedBadges = badges.filter(b => b.unlocked);
 
@@ -71,230 +70,192 @@ Report generated autonomously by GitHired Developer Talent Intelligence.
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-md">
         
         {/* Modal Window Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-[#0b0f19] border border-white/15 rounded-3xl shadow-2xl shadow-cyan-500/10 overflow-hidden text-left"
+          exit={{ opacity: 0, scale: 0.96, y: 15 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+          className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-[#0b0f19] border border-white/[0.08] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden text-left"
         >
           {/* Top Decorative Ambient Glow */}
-          <div className="absolute top-0 left-1/4 w-1/2 h-32 bg-gradient-to-r from-indigo-500/20 via-cyan-500/20 to-purple-500/20 blur-3xl pointer-events-none -z-0" />
+          <div className="absolute top-0 left-1/4 w-1/2 h-32 bg-indigo-500/10 blur-3xl pointer-events-none" />
 
           {/* MODAL HEADER */}
-          <div className="relative z-10 flex items-center justify-between px-6 py-5 border-b border-white/10 bg-[#080d1a]/80 backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-cyan-400">
-                <FileText className="w-5 h-5" />
+          <div className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.08] bg-[#080d1a]/90 backdrop-blur-md gap-2">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <div className="p-2 rounded-xl bg-indigo-500/15 border border-indigo-500/25 text-cyan-400 flex-shrink-0">
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
-                    EXECUTIVE TALENT DOSSIER
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 truncate">
+                    EXECUTIVE DOSSIER
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                    VERIFIED // AST-V2
+                  <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/25 flex-shrink-0">
+                    VERIFIED
                   </span>
                 </div>
-                <h3 className="text-lg font-extrabold text-white tracking-tight">
-                  {profile.name} — Hiring Intelligence Briefing
+                <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight truncate">
+                  {profile.name} — Talent Briefing
                 </h3>
               </div>
             </div>
 
             {/* Header Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               <button
                 onClick={handleCopyBriefing}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-white/10 text-xs font-bold transition-all shadow-sm active:scale-95"
-                title="Copy formatted summary to clipboard"
+                className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-white/[0.08] text-xs font-bold transition-all"
+                title="Copy summary"
               >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-300">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-slate-300" />
-                    <span>Copy Summary</span>
-                  </>
-                )}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-300" />}
+                <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
 
               <button
                 onClick={handleExportPdf}
                 disabled={isExporting}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 hover:opacity-95 text-white text-xs font-extrabold shadow-md shadow-indigo-500/25 transition-all active:scale-95 disabled:opacity-50"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 hover:opacity-95 text-white text-xs font-bold shadow-sm transition-all disabled:opacity-50"
               >
                 {isExporting ? (
                   <>
-                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Generating...</span>
+                    <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Exporting...</span>
                   </>
                 ) : (
                   <>
-                    <Download className="w-3.5 h-3.5 text-white" />
-                    <span>Download PDF</span>
+                    <Download className="w-3.5 h-3.5" />
+                    <span>PDF</span>
                   </>
                 )}
               </button>
 
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-                title="Close Modal"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                title="Close"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           {/* SCROLLABLE DOSSIER CONTENT */}
-          <div className="relative z-10 flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="relative z-10 flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6 touch-scroll">
             
             {/* Candidate Overview Card */}
-            <div className="p-5 rounded-2xl bg-[#0e1424] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-              <div className="flex items-center gap-4">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0e1424] border border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
                 <img
                   src={profile.avatar_url}
                   alt={profile.name}
-                  className="w-16 h-16 rounded-2xl object-cover border-2 border-cyan-400/50 shadow-lg"
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border border-cyan-400/40 shadow-md flex-shrink-0"
                 />
-                <div>
-                  <h4 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                    <span>{profile.name}</span>
+                <div className="min-w-0">
+                  <h4 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-1.5 truncate">
+                    <span className="truncate">{profile.name}</span>
                     <span className="text-xs font-mono font-normal text-slate-400">@{profile.login}</span>
                   </h4>
-                  <p className="text-xs text-slate-300 max-w-xl line-clamp-2 mt-1">
+                  <p className="text-xs text-slate-300 line-clamp-2 mt-0.5">
                     {profile.bio || 'Autonomous developer talent analyzed via verified GitHub code telemetry.'}
                   </p>
-                  <div className="flex flex-wrap items-center gap-2 mt-2 text-[11px] font-mono text-slate-400">
+                  <div className="flex flex-wrap items-center gap-2 mt-1.5 text-[11px] font-mono text-slate-400">
                     <span className="text-indigo-300 font-bold">{profile.seniority_level}</span>
                     <span>•</span>
-                    <span>{profile.public_repos} Public Repos</span>
+                    <span>{profile.public_repos} Repos</span>
                     <span>•</span>
                     <span>{profile.total_stars.toLocaleString()} Stars</span>
                   </div>
                 </div>
               </div>
 
-              {/* Potential Score Plaque */}
-              <div className="flex md:flex-col items-center md:items-end justify-between border-t md:border-t-0 md:border-l border-white/10 pt-3 md:pt-0 md:pl-6">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
-                  Engineering Rating
-                </span>
-                <div className="flex items-baseline gap-1.5 my-0.5">
-                  <span className="text-3xl font-black text-cyan-300 font-mono">
+              {/* Score pill */}
+              <div className="flex sm:flex-col items-center sm:items-end justify-between border-t sm:border-t-0 pt-3 sm:pt-0 border-white/[0.06]">
+                <span className="text-[10px] font-mono text-slate-400 uppercase">Potential Rating</span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl sm:text-3xl font-black text-white font-mono glow-text-indigo">
                     {profile.potential_score}
                   </span>
-                  <span className="text-xs font-mono text-slate-400">/ 100</span>
+                  <span className="text-slate-500 text-xs font-mono">/ 100</span>
                 </div>
-                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                <span className="text-[10px] font-bold text-cyan-400 font-mono">
                   {profile.recommendation_status}
                 </span>
               </div>
             </div>
 
-            {/* Two Column Section: Telemetry Metrics & Code Complexity */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              
-              {/* Telemetry Numbers */}
-              <div className="p-4 rounded-2xl bg-[#0c111e] border border-white/10">
-                <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-300 mb-3 flex items-center gap-2">
-                  <Calendar className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>Cadence & Velocity Telemetry</span>
-                </h5>
-                <div className="grid grid-cols-2 gap-3 font-mono">
-                  <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
-                    <span className="text-[10px] text-slate-400 block">Total Stars</span>
-                    <span className="text-base font-bold text-white">{profile.total_stars.toLocaleString()}</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
-                    <span className="text-[10px] text-slate-400 block">Active Streak</span>
-                    <span className="text-base font-bold text-cyan-300">{profile.active_streak_days} Days</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
-                    <span className="text-[10px] text-slate-400 block">Community Followers</span>
-                    <span className="text-base font-bold text-white">{profile.followers.toLocaleString()}</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5">
-                    <span className="text-[10px] text-slate-400 block">Total Forks</span>
-                    <span className="text-base font-bold text-white">{profile.total_forks.toLocaleString()}</span>
-                  </div>
-                </div>
+            {/* Executive Highlights Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+                <span className="text-[10px] font-mono text-indigo-300 block mb-1">COMPLEXITY GRADE</span>
+                <span className="text-xl font-extrabold text-white font-mono block">Grade {complexity.grade}</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Architecture Depth: {complexity.architectureDepth}%</span>
               </div>
-
-              {/* AST Complexity Scores */}
-              <div className="p-4 rounded-2xl bg-[#0c111e] border border-white/10">
-                <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-300 mb-3 flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>AST Complexity Breakdown</span>
-                </h5>
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/50">
-                    <span className="text-slate-300">Architectural Depth</span>
-                    <span className="font-mono font-bold text-cyan-300">{complexity.architectureDepth}/100</span>
-                  </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/50">
-                    <span className="text-slate-300">Code Hygiene & Modularity</span>
-                    <span className="font-mono font-bold text-indigo-300">{complexity.codeHygiene}/100</span>
-                  </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/50">
-                    <span className="text-slate-300">Maintainability Rating</span>
-                    <span className="font-mono font-bold text-emerald-300">{complexity.maintainability}/100</span>
-                  </div>
-                </div>
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+                <span className="text-[10px] font-mono text-cyan-300 block mb-1">CONTRIBUTION CADENCE</span>
+                <span className="text-xl font-extrabold text-white font-mono block">{profile.active_streak_days} Days</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Current Active Streak</span>
               </div>
-
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+                <span className="text-[10px] font-mono text-amber-300 block mb-1">VERIFIED BADGES</span>
+                <span className="text-xl font-extrabold text-white font-mono block">{unlockedBadges.length} Earned</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Algorithmic proof</span>
+              </div>
             </div>
 
-            {/* Top Verified Competencies */}
-            <div className="p-4 rounded-2xl bg-[#0c111e] border border-white/10">
-              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Verified Technical Competencies</span>
+            {/* AI Executive Evaluation Narrative */}
+            <div className="p-4 rounded-2xl bg-indigo-950/25 border border-indigo-500/20 space-y-2">
+              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                <span>Executive Architectural Synthesis</span>
               </h5>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {verifiedSkills.slice(0, 4).map((skill, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-slate-900/70 border border-white/5 flex flex-col justify-between">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-white text-xs">{skill.name}</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
-                        {skill.level}
-                      </span>
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                Candidate <strong>@{profile.login}</strong> demonstrates deterministic code execution maturity with an overall potential score of <strong>{profile.potential_score}/100</strong>. Analysis of public repositories confirms strong patterns in <strong>{techStack.slice(0, 3).map(t => t.name).join(', ')}</strong>, with an emphasis on maintainable systems and consistent contribution cadence.
+              </p>
+            </div>
+
+            {/* Verified Technical Stack */}
+            <div className="space-y-2">
+              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Primary Verified Tech Stack</span>
+              </h5>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {techStack.slice(0, 4).map((tech) => (
+                  <div key={tech.name} className="p-2.5 rounded-xl bg-black/30 border border-white/[0.05]">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="font-semibold text-white truncate">{tech.name}</span>
+                      <span className="text-slate-400 font-mono text-[10px]">{tech.percentage}%</span>
                     </div>
-                    <p className="text-[11px] text-slate-400 leading-relaxed">
-                      {skill.proofText}
-                    </p>
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-white/[0.05]">
+                      {tech.tier}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Flagship Production Repositories */}
-            <div className="p-4 rounded-2xl bg-[#0c111e] border border-white/10">
-              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
-                <GitPullRequest className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Top Production Repositories</span>
+            {/* Flagship Repositories */}
+            <div className="space-y-2">
+              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-purple-400" />
+                <span>Flagship Repositories Evaluated</span>
               </h5>
               <div className="space-y-2">
-                {repos.slice(0, 3).map((repo, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-slate-900/60 border border-white/5 flex items-center justify-between gap-4">
+                {repos.slice(0, 3).map((repo) => (
+                  <div key={repo.id} className="p-3 rounded-xl bg-black/20 border border-white/[0.05] flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-white truncate">{repo.name}</span>
-                        {repo.language && (
-                          <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-slate-800 text-cyan-300">
-                            {repo.language}
-                          </span>
-                        )}
+                        <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/40 px-1.5 py-0.5 rounded border border-cyan-500/20">
+                          {repo.architecture_type}
+                        </span>
                       </div>
-                      <p className="text-[11px] text-slate-400 truncate mt-0.5">
-                        {repo.description || 'Public engineering repository'}
+                      <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">
+                        {repo.description || 'Public engineering codebase.'}
                       </p>
                     </div>
                     <div className="flex items-center gap-1 text-xs font-mono text-amber-400 flex-shrink-0">
@@ -307,8 +268,8 @@ Report generated autonomously by GitHired Developer Talent Intelligence.
             </div>
 
             {/* Recommended Interview Strategy Prompts */}
-            <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-950/40 via-purple-950/30 to-slate-900/60 border border-indigo-500/25">
-              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-300 mb-2 flex items-center gap-2">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-900/60 border border-white/[0.08]">
+              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-300 mb-2 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Executive Recruiter Interview Strategy</span>
               </h5>
@@ -327,23 +288,23 @@ Report generated autonomously by GitHired Developer Talent Intelligence.
           </div>
 
           {/* MODAL FOOTER */}
-          <div className="px-6 py-4 border-t border-white/10 bg-[#080d1a] flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="text-[11px] font-mono text-slate-400">
-              ⚡ 1-Click Executive Export • Verified with GitHired Telemetry
+          <div className="px-4 sm:px-6 py-3.5 border-t border-white/[0.08] bg-[#080d1a] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 text-center sm:text-left">
+              ⚡ 1-Click Executive Export • Verified GitHired Telemetry
             </span>
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={handleCopyBriefing}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10 text-xs font-bold transition-all active:scale-95"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/[0.08] text-xs font-bold transition-all active:scale-95"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-300" />}
                 <span>{copied ? 'Copied Briefing!' : 'Copy Summary'}</span>
               </button>
 
               <button
                 onClick={handleExportPdf}
                 disabled={isExporting}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 hover:opacity-95 text-white text-xs font-extrabold shadow-md shadow-indigo-500/30 transition-all active:scale-95 disabled:opacity-50"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 hover:opacity-95 text-white text-xs font-extrabold shadow-sm transition-all active:scale-95 disabled:opacity-50"
               >
                 {isExporting ? (
                   <>
@@ -353,7 +314,7 @@ Report generated autonomously by GitHired Developer Talent Intelligence.
                 ) : (
                   <>
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download PDF Dossier</span>
+                    <span>Download PDF</span>
                   </>
                 )}
               </button>
@@ -366,3 +327,5 @@ Report generated autonomously by GitHired Developer Talent Intelligence.
     </AnimatePresence>
   );
 };
+
+export default ExecutiveDossierModal;

@@ -23,7 +23,6 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
   const [isCandidateTyping, setIsCandidateTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Load chat history from localStorage or set initial message
   useEffect(() => {
     if (!isOpen) return;
     const saved = localStorage.getItem(storageKey);
@@ -34,7 +33,6 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
       } catch (e) {}
     }
 
-    // Default opening greeting
     const initialGreeting: DirectChatMessage = {
       id: `msg-greet-${Date.now()}`,
       sender: 'candidate',
@@ -51,9 +49,9 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
   }, [messages, isCandidateTyping]);
 
   const quickPrompts = [
-    { label: '📅 Schedule screening call', text: `Hi ${profile.name}, we are very impressed by your work on GitHub. Would you be open to a 20-minute intro call this week?` },
-    { label: '💼 Senior / Lead opening', text: `We have an opening for a ${profile.seniority_level} aligned with your experience in ${techStack[0]?.name}. Would love to share the JD!` },
-    { label: '🤝 Open-source collaboration', text: `Loved your repository architecture. We're building tooling around the same space and would like to collaborate.` }
+    { label: '📅 Intro call', text: `Hi ${profile.name}, we are very impressed by your work on GitHub. Would you be open to a 20-minute intro call this week?` },
+    { label: '💼 Senior opening', text: `We have an opening for a ${profile.seniority_level} aligned with your experience in ${techStack[0]?.name}. Would love to share the JD!` },
+    { label: '🤝 Open-source', text: `Loved your repository architecture. We're building tooling around the same space and would like to collaborate.` }
   ];
 
   const handleSend = (overrideText?: string) => {
@@ -75,17 +73,13 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
     setInputVal('');
     setIsCandidateTyping(true);
 
-    // Simulate realistic candidate reply
     setTimeout(() => {
       let reply = `That sounds very interesting! I'd be glad to discuss further. You can check my repositories or send calendar details through my GitHub email (${profile.email || `${profile.login}@users.noreply.github.com`}).`;
       
-      const lower = textToSend.toLowerCase();
-      if (lower.includes('call') || lower.includes('schedule') || lower.includes('meet')) {
-        reply = `I would love to connect. I generally have availability Tuesday and Thursday afternoons. Feel free to send a calendar invite to ${profile.email || `${profile.login}@users.noreply.github.com`}.`;
-      } else if (lower.includes('opening') || lower.includes('role') || lower.includes('jd')) {
-        reply = `The role aligns well with what I'm looking for! With my experience across ${profile.public_repos} public repos and focus on ${techStack[0]?.name}, I'm looking for high-ownership technical leadership. Please share the details!`;
-      } else if (lower.includes('rate') || lower.includes('salary') || lower.includes('compensation')) {
-        reply = `For ${profile.seniority_level} engagements, my baseline aligns with top-tier market compensation with significant equity upside for high-impact missions.`;
+      if (textToSend.toLowerCase().includes('interview') || textToSend.toLowerCase().includes('call')) {
+        reply = `I would be happy to take a 20-minute intro call. Feel free to send an invite to my linked GitHub email!`;
+      } else if (textToSend.toLowerCase().includes('compensation') || textToSend.toLowerCase().includes('salary')) {
+        reply = `I evaluate opportunities based on architectural challenge, team autonomy, and competitive market compensation for ${profile.seniority_level} roles.`;
       }
 
       const candidateReply: DirectChatMessage = {
@@ -108,53 +102,53 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
+          initial={{ opacity: 0, scale: 0.96, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="w-full max-w-2xl rounded-3xl bg-[#0b0e17] border border-white/10 shadow-2xl flex flex-col h-[600px] overflow-hidden"
+          exit={{ opacity: 0, scale: 0.96, y: 15 }}
+          className="w-full max-w-2xl rounded-2xl sm:rounded-3xl bg-[#0b0e17] border border-white/[0.08] shadow-2xl flex flex-col h-[85vh] max-h-[620px] overflow-hidden"
         >
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-white/10 bg-black/40 flex items-center justify-between">
-            <div className="flex items-center gap-3.5">
-              <div className="relative">
+          <div className="p-3.5 sm:p-4 border-b border-white/[0.08] bg-black/40 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="relative flex-shrink-0">
                 <img
                   src={profile.avatar_url}
                   alt={profile.name}
-                  className="w-11 h-11 rounded-xl object-cover border border-indigo-500/40 bg-slate-900"
+                  className="w-10 h-10 rounded-xl object-cover border border-indigo-500/30 bg-slate-900"
                 />
-                <span className="w-3 h-3 rounded-full bg-cyan-400 border-2 border-[#0b0e17] absolute -bottom-0.5 -right-0.5" />
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 border-2 border-[#0b0e17] absolute -bottom-0.5 -right-0.5" />
               </div>
-              <div>
-                <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                  Direct Recruiter Connection • {profile.name}
+              <div className="min-w-0">
+                <h3 className="text-xs sm:text-sm font-bold text-white truncate">
+                  Direct Channel • {profile.name}
                 </h3>
-                <p className="text-xs text-cyan-400 font-mono flex items-center gap-1.5">
-                  <ShieldCheck className="w-3 h-3" />
-                  Verified @{profile.login} • Active Candidate Channel
+                <p className="text-[10px] sm:text-xs text-cyan-400 font-mono flex items-center gap-1 truncate">
+                  <ShieldCheck className="w-3 h-3 flex-shrink-0" />
+                  <span>@{profile.login} • Active Candidate</span>
                 </p>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Quick Prompts Bar */}
-          <div className="px-4 py-2 bg-slate-950/60 border-b border-white/5 flex items-center gap-2 overflow-x-auto">
-            <span className="text-[10px] font-mono text-slate-500 uppercase flex-shrink-0">
-              Quick Inquiries:
+          <div className="px-3 sm:px-4 py-2 bg-slate-950/60 border-b border-white/[0.05] flex items-center gap-2 overflow-x-auto touch-scroll">
+            <span className="text-[10px] font-mono text-slate-400 uppercase flex-shrink-0">
+              Quick:
             </span>
             {quickPrompts.map((qp, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(qp.text)}
-                className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-indigo-950/60 text-slate-300 hover:text-indigo-200 border border-white/10 hover:border-indigo-500/30 whitespace-nowrap transition-all"
+                className="text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-indigo-950/60 text-slate-300 hover:text-cyan-300 border border-white/[0.08] hover:border-cyan-500/30 whitespace-nowrap transition-all flex-shrink-0"
               >
                 {qp.label}
               </button>
@@ -162,7 +156,7 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
           </div>
 
           {/* Messages Scroll Area */}
-          <div className="flex-1 p-5 overflow-y-auto space-y-4">
+          <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3.5 touch-scroll">
             {messages.map((m) => (
               <div
                 key={m.id}
@@ -170,17 +164,17 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
                   m.sender === 'recruiter' ? 'items-end' : 'items-start'
                 }`}
               >
-                <div className="flex items-center gap-2 mb-1 px-1 text-[11px] font-mono text-slate-400">
+                <div className="flex items-center gap-2 mb-1 px-1 text-[10px] font-mono text-slate-400">
                   <span>{m.senderName}</span>
                   <span>•</span>
                   <span>{m.timestamp}</span>
                 </div>
 
                 <div
-                  className={`max-w-[85%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                  className={`max-w-[85%] p-3 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                     m.sender === 'recruiter'
-                      ? 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 text-white rounded-br-none shadow-md shadow-indigo-600/20'
-                      : 'bg-slate-900/90 text-slate-200 border border-white/10 rounded-bl-none shadow-sm'
+                      ? 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 text-white rounded-br-none shadow-md'
+                      : 'bg-slate-900/90 text-slate-200 border border-white/[0.08] rounded-bl-none shadow-sm'
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{m.text}</p>
@@ -195,7 +189,7 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
             ))}
 
             {isCandidateTyping && (
-              <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900/80 p-3 rounded-2xl w-fit border border-white/5">
+              <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900/80 p-2.5 rounded-xl w-fit border border-white/[0.05]">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
                 <span>@{profile.login} is typing a response...</span>
               </div>
@@ -204,7 +198,7 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
           </div>
 
           {/* Message Input Form */}
-          <div className="p-4 border-t border-white/10 bg-black/40">
+          <div className="p-3 border-t border-white/[0.08] bg-black/40">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -216,14 +210,14 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
                 type="text"
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
-                placeholder={`Message @${profile.login} directly regarding roles...`}
+                placeholder={`Message @${profile.login}...`}
                 disabled={isCandidateTyping}
-                className="flex-1 bg-slate-900/90 border border-white/10 focus:border-indigo-500/60 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none font-sans"
+                className="flex-1 min-w-0 bg-slate-900/90 border border-white/[0.1] focus:border-indigo-500/60 rounded-xl px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none font-sans"
               />
               <button
                 type="submit"
                 disabled={!inputVal.trim() || isCandidateTyping}
-                className="p-3 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 hover:opacity-95 active:scale-95 text-white font-bold transition-all disabled:opacity-50"
+                className="p-2.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 hover:opacity-95 active:scale-95 text-white font-bold transition-all disabled:opacity-40 flex-shrink-0"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -234,3 +228,5 @@ export const DirectChatModal: React.FC<DirectChatModalProps> = ({
     </AnimatePresence>
   );
 };
+
+export default DirectChatModal;

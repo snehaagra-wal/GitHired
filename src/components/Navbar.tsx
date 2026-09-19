@@ -11,20 +11,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectTab
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#07090e]/90 backdrop-blur-xl transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#07090e]/85 backdrop-blur-xl transition-colors">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-15 sm:h-16 flex items-center justify-between gap-2">
         
         {/* Brand Logo */}
         <div 
           onClick={() => onSelectTab('profile')}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group flex-shrink-0"
           id="nav-brand-logo"
         >
           {/* Custom Talent Nexus Geometric Icon */}
-          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-500 to-cyan-400 p-[1.5px] shadow-lg shadow-indigo-500/30 group-hover:shadow-indigo-500/60 transition-all duration-300">
-            <div className="w-full h-full bg-[#0c101c] rounded-[10px] flex items-center justify-center overflow-hidden">
+          <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-500 to-cyan-400 p-[1.5px] shadow-md shadow-indigo-500/20 group-hover:shadow-indigo-500/50 transition-all duration-200">
+            <div className="w-full h-full bg-[#0c101c] rounded-[9px] flex items-center justify-center overflow-hidden">
               <svg 
-                className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform duration-300" 
+                className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:scale-105 transition-transform duration-200" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
@@ -32,9 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 strokeLinecap="round" 
                 strokeLinejoin="round"
               >
-                {/* Outer Nexus Polygon */}
                 <path d="M12 2L21 7.5V16.5L12 22L3 16.5V7.5L12 2Z" stroke="url(#nexus-grad)" strokeWidth="1.6" />
-                {/* Central Core & Interconnected Branching */}
                 <circle cx="12" cy="12" r="2.5" fill="#38bdf8" />
                 <line x1="12" y1="2" x2="12" y2="9.5" stroke="#818cf8" strokeWidth="1.5" />
                 <line x1="3" y1="16.5" x2="10" y2="13" stroke="#818cf8" strokeWidth="1.5" />
@@ -51,52 +49,52 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-black tracking-tight text-white font-display">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white font-display">
                 Git<span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Hired</span>
               </span>
-              <span className="px-2.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 rounded-full flex items-center gap-1.5 shadow-sm">
+              <span className="hidden md:inline-flex px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider bg-indigo-500/15 text-indigo-300 border border-indigo-500/25 rounded-full items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5 text-cyan-400" />
                 Talent Intelligence
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-mono tracking-tight -mt-0.5">
+            <p className="hidden sm:block text-[11px] text-slate-400 font-mono tracking-tight -mt-0.5">
               Empirical Code Telemetry & Radar
             </p>
           </div>
         </div>
 
-        {/* Navigation Tabs - High Contrast & Modern */}
-        <nav className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-white/10 shadow-inner">
+        {/* Responsive Segmented Navigation Tabs */}
+        <nav className="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-white/[0.08]">
           <button
             id="nav-tab-profile"
             onClick={() => onSelectTab('profile')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 ${
               activeTab === 'profile'
-                ? 'bg-gradient-to-r from-indigo-600/40 via-purple-600/30 to-cyan-600/30 text-white border border-indigo-500/50 shadow-md shadow-indigo-500/20'
+                ? 'bg-indigo-600/30 text-white border border-indigo-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <Search className="w-4 h-4 text-cyan-400" />
-            <span>Profile Intelligence</span>
+            <Search className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+            <span>Profile<span className="hidden md:inline"> Intelligence</span></span>
           </button>
 
           <button
             id="nav-tab-compare"
             onClick={() => onSelectTab('compare')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 ${
               activeTab === 'compare'
-                ? 'bg-gradient-to-r from-indigo-600/40 via-purple-600/30 to-cyan-600/30 text-white border border-indigo-500/50 shadow-md shadow-indigo-500/20'
+                ? 'bg-indigo-600/30 text-white border border-indigo-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <GitCompare className="w-4 h-4 text-purple-400" />
-            <span>Compare Developers</span>
+            <GitCompare className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />
+            <span>Compare<span className="hidden md:inline"> Developers</span></span>
           </button>
         </nav>
 
-        {/* Right Status Badge (Theme toggle removed as requested) */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-white/10 text-xs font-mono text-slate-300">
+        {/* Right Status Badge (Hidden on mobile) */}
+        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/60 border border-white/[0.08] text-xs font-mono text-slate-300">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span>Live AST Engine</span>
         </div>
@@ -105,3 +103,5 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+
+export default Navbar;

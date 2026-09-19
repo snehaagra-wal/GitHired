@@ -21,17 +21,17 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
   });
 
   return (
-    <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 shadow-xl relative overflow-hidden">
+    <div className="glass-card rounded-2xl p-4 sm:p-6 border border-white/[0.08] relative overflow-hidden">
       
       {/* Header & Filters */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-6">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400">
+            <div className="p-2 rounded-xl bg-purple-500/15 border border-purple-500/25 text-purple-400">
               <GitBranch className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white tracking-tight">
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
                 Repository Architecture & Codebases
               </h3>
               <p className="text-xs text-slate-400 font-mono">
@@ -41,16 +41,16 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
           </div>
         </div>
 
-        {/* Search & Filter Controls */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="relative">
+        {/* Search & Filter Controls (Responsive for mobile) */}
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-initial">
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search repos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-8 pr-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60 w-36 sm:w-44 font-mono"
+              className="w-full sm:w-44 pl-8 pr-3 py-1.5 rounded-xl bg-black/30 border border-white/[0.08] text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60 font-mono"
             />
           </div>
 
@@ -58,7 +58,7 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
             value={selectedLang}
             onChange={(e) => setSelectedLang(e.target.value)}
             aria-label="Filter repositories by language"
-            className="px-2.5 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs text-slate-300 focus:outline-none focus:border-indigo-500/60 font-mono"
+            className="px-2.5 py-1.5 rounded-xl bg-black/30 border border-white/[0.08] text-xs text-slate-300 focus:outline-none focus:border-indigo-500/60 font-mono flex-shrink-0"
           >
             {languages.map(l => (
               <option key={l as string} value={l as string} className="bg-slate-900 text-white">
@@ -75,44 +75,43 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
           No repositories matching the current filter.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
           {filteredRepos.map((repo) => (
             <motion.div
               key={repo.id}
-              whileHover={{ scale: 1.015, y: -2 }}
-              transition={{ duration: 0.2 }}
-              className="p-4 rounded-xl bg-slate-900/60 border border-white/5 hover:border-indigo-500/30 flex flex-col justify-between transition-all group"
+              whileHover={{ y: -2 }}
+              className="p-3.5 sm:p-4 rounded-xl bg-black/20 border border-white/[0.05] hover:border-indigo-500/30 flex flex-col justify-between transition-all group"
             >
               <div>
                 {/* Title & External Link */}
-                <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-start justify-between gap-2 mb-1.5">
                   <a
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-1.5"
+                    className="text-sm sm:text-base font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-1.5 truncate"
                   >
-                    <span>{repo.name}</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-slate-400" />
+                    <span className="truncate">{repo.name}</span>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity text-slate-400 flex-shrink-0" />
                   </a>
 
                   {/* Complexity Tag */}
                   <span
-                    className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full ${
+                    className={`text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${
                       repo.complexity_rating === 'High'
-                        ? 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30'
+                        ? 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/25'
                         : repo.complexity_rating === 'Medium'
-                        ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30'
-                        : 'bg-slate-800 text-slate-400 border border-white/5'
+                        ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/25'
+                        : 'bg-slate-800 text-slate-400 border border-white/[0.05]'
                     }`}
                   >
-                    {repo.complexity_rating} Complexity
+                    {repo.complexity_rating}
                   </span>
                 </div>
 
                 {/* Architecture Type Pill */}
-                <div className="mb-2.5">
-                  <span className="text-[11px] font-mono text-cyan-400/90 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/20 inline-block">
+                <div className="mb-2">
+                  <span className="text-[10px] sm:text-[11px] font-mono text-cyan-400/90 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/20 inline-block">
                     {repo.architecture_type}
                   </span>
                 </div>
@@ -124,18 +123,18 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
 
                 {/* Topics / Tags */}
                 {repo.topics && repo.topics.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  <div className="flex flex-wrap gap-1 mb-3">
                     {repo.topics.slice(0, 4).map(topic => (
                       <span
                         key={topic}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-400 border border-white/5 flex items-center gap-1"
+                        className="text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-400 border border-white/[0.05] flex items-center gap-1"
                       >
                         <Tag className="w-2.5 h-2.5 text-slate-500" />
                         {topic}
                       </span>
                     ))}
                     {repo.topics.length > 4 && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 text-slate-500">
+                      <span className="text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 text-slate-500">
                         +{repo.topics.length - 4}
                       </span>
                     )}
@@ -144,7 +143,7 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
               </div>
 
               {/* Metrics Footer */}
-              <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs font-mono text-slate-400">
+              <div className="flex items-center justify-between pt-2.5 border-t border-white/[0.05] text-xs font-mono text-slate-400">
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1 text-amber-300">
                     <Star className="w-3.5 h-3.5" />
@@ -164,7 +163,7 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
 
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  <span className="text-slate-300">{repo.language || 'Other'}</span>
+                  <span className="text-slate-300 text-[11px] sm:text-xs">{repo.language || 'Other'}</span>
                 </div>
               </div>
             </motion.div>
@@ -175,3 +174,5 @@ export const RepoList: React.FC<RepoListProps> = ({ repos }) => {
     </div>
   );
 };
+
+export default RepoList;
